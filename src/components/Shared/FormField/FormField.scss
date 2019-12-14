@@ -1,0 +1,58 @@
+.form-field {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 4px 16px;
+  position: relative;
+
+  .form-margin {
+    margin-left: 10;
+  }
+
+  .form-label {
+    position: relative;
+    width: 100px;
+    padding: 0px 32px 0 0;
+    text-align: right;
+    height: 100%;
+  }
+
+  .field {
+    flex: 1;
+
+    &>p {
+      position: absolute;
+      font-size: 12px;
+      color: red;
+      left: 9px;
+      bottom: 8px;
+      padding: 0;
+      margin: 0;
+    }
+
+    &>input,
+    &>textarea {
+      padding: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      border: none;
+
+      &:read-only {
+        background-color: #e0e0e0;
+        color: #888;
+      }
+
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+  }
+}

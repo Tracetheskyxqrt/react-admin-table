@@ -6,8 +6,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {Log} from "../../models/Log";
-import Button from "../Shared/Button/Button";
+import {Log} from "../../../models/Log";
+import Button from "../Button/Button";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -54,12 +54,12 @@ export const rows = [
     createData('5', '676', 'category5', '5', 'content1',false),
 ];
 
-interface Props {
+interface LogProps {
     rows: Array <Log>;
 }
 
 
-export default function CustomizedTables({rows}: Props) {
+export default function CustomizedTables({rows}: LogProps) {
     const classes = useStyles();
 
     return (
@@ -74,6 +74,7 @@ export default function CustomizedTables({rows}: Props) {
                         <StyledTableCell>Content</StyledTableCell>
                         <StyledTableCell>Marked up</StyledTableCell>
                         <StyledTableCell>&nbsp;</StyledTableCell>
+                        <StyledTableCell>&nbsp;</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -87,7 +88,8 @@ export default function CustomizedTables({rows}: Props) {
                             <StyledTableCell>{row.requestId}</StyledTableCell>
                             <StyledTableCell>{row.content}</StyledTableCell>
                             <input type="checkbox" defaultChecked={row.isMarkedUp} />
-                            <StyledTableCell align="center"><Button>Update</Button></StyledTableCell>
+                            <StyledTableCell><Button>Update</Button></StyledTableCell>
+                            <StyledTableCell><Button>Delete</Button></StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

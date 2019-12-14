@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import './App.scss';
-import Table, {rows} from '../Table/Table';
-import Button from "../Shared/Button/Button";
+import LogList from "../AdminTable/LogList/LogList";
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <p className="Table-header"><b>Admin log's table</b></p>
-                <Button className = "new-button">New</Button>
-                <Table rows = {rows}/>
+                <LogList/>
             </div>
         );
     }
