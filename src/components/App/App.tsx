@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.scss';
-import LogList from "../AdminTable/LogList/LogList";
+import LogListVew from "../AdminTable/LogList/LogListVew";
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <LogList/>
+                <LogListVew/>
             </div>
         );
     }
