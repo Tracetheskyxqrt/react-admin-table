@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Props } from 'react';
-import Button from "../../Shared/Button/Button";
+import Button from '../../Shared/Button/Button';
 import FormField from '../../Shared/FormField/FormField';
 
 interface LogCreateViewProps extends Props<LogCreateView> {
@@ -12,7 +12,7 @@ interface LogCreateViewProps extends Props<LogCreateView> {
     isMarkedUp: boolean;
 
     onCategoryIdChange: (categoryId: string) => any;
-    onCategoryName: (categoryName: string) => any;
+    onCategoryNameChange: (categoryName: string) => any;
     onRequestIdChange: (requestId: string) => any;
     onContentChange: (content: string) => any;
     onIsMarkedUpChange: (isMarkedUp: any) => any; //Конфликт в последнем FormField, String to Boolean 'String(e.target.value)'
@@ -23,17 +23,17 @@ export class LogCreateView extends React.Component<LogCreateViewProps> {
     render() {
         const {
             categoryId, categoryName, requestId, content, isMarkedUp,
-            onCategoryIdChange, onCategoryName, onRequestIdChange, onContentChange, onIsMarkedUpChange, onCreate
+            onCategoryIdChange, onCategoryNameChange, onRequestIdChange, onContentChange, onIsMarkedUpChange, onCreate
         } = this.props;
         return (
-            <div className='todo-create-view-container'>
+            <div className='log-create-view-container'>
                 <Button onClick={onCreate}>Create</Button>
-                <div className='todo-form'>
+                <div className='log-form'>
                     <FormField label='Category ID'>
                         <input value={categoryId} onChange={(e) => onCategoryIdChange(e.target.value)}/>
                     </FormField>
                     <FormField>
-                        <input value={categoryName} onChange={(e) => onCategoryName(e.target.value)}/>
+                        <input value={categoryName} onChange={(e) => onCategoryNameChange(e.target.value)}/>
                     </FormField>
                     <FormField>
                         <input value={requestId} onChange={(e) => onRequestIdChange(e.target.value)}/>

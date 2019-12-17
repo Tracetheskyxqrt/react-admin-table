@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 import './App.scss';
-import LogListVew from "../AdminTable/LogList/LogListVew";
 import { HashRouter, Route, Switch } from 'react-router-dom';
+import LogList from '../AdminTable/LogList/LogListContainer';
+import LogCreate from '../AdminTable/LogCreate/LogCreateContainer';
+import LogUpdate from '../AdminTable/LogUpdate/LogUpdateContainer';
+import LogView from '../AdminTable/Log/LogContainer';
+import NotFound from '../NotFound/NotFound';
 
-class App extends Component {
+
+export default class App extends Component {
     render() {
         return (
             <div className="App">
-                <LogListVew/>
+                <HashRouter>
+                    <Switch>
+                        <Route exact={true} path='/' component={LogList} />
+                        <Route path='/create' component={LogCreate} />
+                        <Route path='/update/:id' component={LogUpdate} />
+                        <Route exact={true} path='/:id' component={LogView} />
+                        <Route path='*' component={NotFound} />
+                    </Switch>
+                </HashRouter>
             </div>
         );
     }
 }
-
-export default App;
 
 /*import React from 'react';
 import './App.scss';

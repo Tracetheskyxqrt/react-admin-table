@@ -1,13 +1,16 @@
-import React from 'react';
-import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import * as React from 'react';
+import { Props } from 'react';
+import { Log } from '../../../models/Log';
+import Button from '../../Shared/Button/Button';
+import { stopEvent } from '../../../lib/stopEvent';
+import {withStyles, createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {Log} from "../../../models/Log";
-import Button from "../Button/Button";
+import {func} from "prop-types";
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -41,25 +44,13 @@ const useStyles = makeStyles({
     },
 });
 
-function createData(id: string, categoryId: string, categoryName: string,
-                    requestId: string, content: string, isMarkedUp: boolean) {
-    return { id, categoryId, categoryName, requestId, content, isMarkedUp };
+interface LogViewProps {
+    log?: Log;
+    onDeleteClick: () => any;
+    onUpdateClick: () => any;
 }
 
-export const rows = [
-    createData('1', '213', 'category1', '1', 'content1', true),
-    createData('2', '123', 'category2', '2', 'content2',true),
-    createData('3', '124', 'category3', '3', 'content3',true),
-    createData('4', '345', 'category4', '4', 'content4',true),
-    createData('5', '676', 'category5', '5', 'content1',false),
-];
-
-interface LogProps {
-    rows: Array <Log>;
-}
-
-
-export default function CustomizedTables({rows}: LogProps) {
+export default function LogView({log, onDeleteClick, onUpdateClick}: LogViewProps) {
     const classes = useStyles();
 
     return (
@@ -78,18 +69,30 @@ export default function CustomizedTables({rows}: LogProps) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map(row => (
-                        <StyledTableRow key={row.id}>
-                            <StyledTableCell>{row.id}</StyledTableCell>
+                    {((log: Log) => (
+                        <StyledTableRow key={log.id}>
+                            <StyledTableCell>{log.id}</StyledTableCell>
                             <StyledTableCell component="th" scope="row">
-                                {row.categoryId}
+                                {log.categoryId}
                             </StyledTableCell>
-                            <StyledTableCell>{row.categoryName}</StyledTableCell>
-                            <StyledTableCell>{row.requestId}</StyledTableCell>
-                            <StyledTableCell>{row.content}</StyledTableCell>
-                            <input type="checkbox" defaultChecked={row.isMarkedUp} />
-                            <StyledTableCell><Button>Update</Button></StyledTableCell>
-                            <StyledTableCell><Button>Delete</Button></StyledTableCell>
+                            <StyledTableCell>{log.categoryName}</StyledTableCell>
+                            <StyledTableCell>{log.requestId}</StyledTableCell>
+                            <StyledTableCell>{log.content}</StyledTableCell>
+                            <input type="checkbox" defaultChecked={log.isMarkedUp}/>
+                            <StyledTableCell>
+                                <Button onClick={(e) => {
+                                    stopEvent(e);
+                                    onUpdateClick();
+                                }}>Update
+                                </Button>
+                            </StyledTableCell>
+                            <StyledTableCell>
+                                <Button onClick={(e) => {
+                                    stopEvent(e);
+                                    onDeleteClick();
+                                }}>Delete
+                                </Button>
+                            </StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>
@@ -97,3 +100,4 @@ export default function CustomizedTables({rows}: LogProps) {
         </Paper>
     );
 }
+
