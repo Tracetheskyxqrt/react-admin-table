@@ -27,7 +27,7 @@ export default class LogListView extends Component <LogListViewProps> {
                     <Button className = "new-button" onClick={() => onCreateClick()}>Create</Button>
                 </div>
                 <DataTable
-                    data = {logs.valueSeq().toArray().sort((a, b) => Number(b.id) - Number(a.id))}
+                    data = {logs.valueSeq().toArray().sort((a, b) => Number(a.id) - Number(b.id))}
                     onRowClick={(log: Log) => onLogClick(log)}
                     onUpdateClick={(log: Log) => onUpdateClick(log)}
                 ></DataTable>

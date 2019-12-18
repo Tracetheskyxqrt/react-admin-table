@@ -9,8 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import {Log} from "../../../models/Log";
 import Button from "../Button/Button";
 import {stopEvent} from "../../../lib/stopEvent";
+import Checkbox from "../Checkbox/Checkbox";
 
-const StyledTableCell = withStyles((theme: Theme) =>
+/*const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
         head: {
             backgroundColor: theme.palette.common.black,
@@ -40,7 +41,7 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
-});
+});*/
 
 interface DataTableProps {
     data: any[];
@@ -49,40 +50,41 @@ interface DataTableProps {
 }
 
 export default function DataTable({data, onRowClick, onUpdateClick}: DataTableProps) {
-    const classes = useStyles();
+    //const classes = useStyles();
 
     return (
-        <Paper className={classes.root}>
-            <Table className={classes.table} aria-label="customized table">
+        <Paper className='root'>
+            <Table className='table' aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell>ID</StyledTableCell>
-                        <StyledTableCell>Category ID</StyledTableCell>
-                        <StyledTableCell>Category name</StyledTableCell>
-                        <StyledTableCell>Request ID</StyledTableCell>
-                        <StyledTableCell>Content</StyledTableCell>
-                        <StyledTableCell>Marked up</StyledTableCell>
-                        <StyledTableCell>&nbsp;</StyledTableCell>
-                        <StyledTableCell>&nbsp;</StyledTableCell>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Category ID</TableCell>
+                        <TableCell>Category name</TableCell>
+                        <TableCell>Request ID</TableCell>
+                        <TableCell>Content</TableCell>
+                        <TableCell>Marked up</TableCell>
+                        <TableCell>&nbsp;</TableCell>
+                        <TableCell>&nbsp;</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {data.map(row => (
-                        <StyledTableRow key={row.id}>
-                            <StyledTableCell>{row.id}</StyledTableCell>
-                            <StyledTableCell component="th" scope="row">
+                        <TableRow key={row.id}>
+                            <TableCell>{row.id}</TableCell>
+                            <TableCell component="th" scope="row">
                                 {row.categoryId}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.categoryName}</StyledTableCell>
-                            <StyledTableCell>{row.requestId}</StyledTableCell>
-                            <StyledTableCell>{row.content}</StyledTableCell>
-                            <input type="checkbox" defaultChecked={row.isMarkedUp}/>
-                            <StyledTableCell><Button onClick={(e) => {
+                            </TableCell>
+                            <TableCell>{row.categoryName}</TableCell>
+                            <TableCell>{row.requestId}</TableCell>
+                            <TableCell>{row.content}</TableCell>
+                            { /*<input type="checkbox" defaultChecked={row.isMarkedUp}/> */}
+                            <TableCell><Checkbox defaultChecked={row.isMarkedUp}/></TableCell>
+                            <TableCell><Button onClick={(e) => {
                                 stopEvent(e);
                                 onUpdateClick(row);
-                            }}>Update</Button></StyledTableCell>
-                            <StyledTableCell><Button>Delete</Button></StyledTableCell>
-                        </StyledTableRow>
+                            }}>Update</Button></TableCell>
+                            <TableCell><Button>Delete</Button></TableCell>
+                        </TableRow>
                     ))}
                 </TableBody>
             </Table>
