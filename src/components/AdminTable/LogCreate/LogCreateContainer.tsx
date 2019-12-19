@@ -4,7 +4,7 @@ import { Props, Dispatch } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { AppState } from '../../../reducers';
-import { LogCreateView } from './LogCreateVew';
+import { LogCreateView } from './LogCreateView';
 import { Log } from '../../../models/Log';
 
 import {

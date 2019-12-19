@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Props } from 'react';
+import React from 'react';
 import { Log } from '../../../models/Log';
 import Button from '../../Shared/Button/Button';
 import { stopEvent } from '../../../lib/stopEvent';
@@ -11,7 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from "../../Shared/Checkbox/Checkbox";
-
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -46,13 +44,14 @@ const useStyles = makeStyles({
 });
 
 interface LogViewProps {
-    log?: Log;
+    log: Log;
     onDeleteClick: () => any;
     onUpdateClick: () => any;
 }
 
 export default function LogView({log, onDeleteClick, onUpdateClick}: LogViewProps) {
     const classes = useStyles();
+    //const row = log;
 
     return (
         <Paper className={classes.root}>
@@ -70,36 +69,32 @@ export default function LogView({log, onDeleteClick, onUpdateClick}: LogViewProp
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {((log: Log) => (
-                        <StyledTableRow key={log.id}>
-                            <StyledTableCell>{log.id}</StyledTableCell>
-                            <StyledTableCell component="th" scope="row">
-                                {log.categoryId}
-                            </StyledTableCell>
-                            <StyledTableCell>{log.categoryName}</StyledTableCell>
-                            <StyledTableCell>{log.requestId}</StyledTableCell>
-                            <StyledTableCell>{log.content}</StyledTableCell>
-                            <StyledTableCell><Checkbox defaultChecked={log.isMarkedUp}/></StyledTableCell>
-                            <StyledTableCell>
-                                <Button onClick={(e) => {
-                                    stopEvent(e);
-                                    onUpdateClick();
-                                }}>Update
-                                </Button>
-                            </StyledTableCell>
-                            <StyledTableCell>
-                                <Button onClick={(e) => {
-                                    stopEvent(e);
-                                    onDeleteClick();
-                                }}>Delete
-                                </Button>
-                            </StyledTableCell>
-                        </StyledTableRow>
-                    ))}
+                    <StyledTableRow key={log.id}>
+                        <StyledTableCell>{log.id}</StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            {log.categoryId}
+                        </StyledTableCell>
+                        <StyledTableCell>{log.categoryName}</StyledTableCell>
+                        <StyledTableCell>{log.requestId}</StyledTableCell>
+                        <StyledTableCell>{log.content}</StyledTableCell>
+                        <StyledTableCell><Checkbox defaultChecked={log.isMarkedUp}/></StyledTableCell>
+                        <StyledTableCell>
+                            <Button onClick={(e) => {
+                                stopEvent(e);
+                                onUpdateClick();
+                            }}>Update
+                            </Button>
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            <Button onClick={(e) => {
+                                stopEvent(e);
+                                onDeleteClick();
+                            }}>Delete
+                            </Button>
+                        </StyledTableCell>
+                    </StyledTableRow>
                 </TableBody>
             </Table>
         </Paper>
     );
 }
-
-//export default withStyles(styles, { withTheme: true })(LogView);

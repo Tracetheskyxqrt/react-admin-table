@@ -1,4 +1,4 @@
-import React, { Component, Props} from 'react';
+import React from 'react';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,7 +10,6 @@ import {Log} from "../../../models/Log";
 import Button from "../Button/Button";
 import {stopEvent} from "../../../lib/stopEvent";
 import Checkbox from "../Checkbox/Checkbox";
-import './DataTable.scss';
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
