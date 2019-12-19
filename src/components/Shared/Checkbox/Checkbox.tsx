@@ -12,7 +12,7 @@ export default class Checkbox extends React.Component<CheckboxProps> {
         const {defaultChecked} = this.props;
         return (
             <div className="react_checkbox">
-                <input type="checkbox" defaultChecked={defaultChecked} /*onChange={this.handleChangeCheckBox}*//>
+                <input type="checkbox" defaultChecked={defaultChecked} /*onChange={this.handleChange}*//>
             </div>
         );
     }

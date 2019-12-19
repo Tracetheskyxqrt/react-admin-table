@@ -13,7 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from "../../Shared/Checkbox/Checkbox";
 
 
-/*const StyledTableCell = withStyles((theme: Theme) =>
+const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
         head: {
             backgroundColor: theme.palette.common.black,
@@ -43,67 +43,63 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
-}); */
+});
 
-interface LogViewProps extends Props<LogView> {
+interface LogViewProps {
     log?: Log;
     onDeleteClick: () => any;
     onUpdateClick: () => any;
 }
 
-export default class LogView extends React.Component<LogViewProps> {
+export default function LogView({log, onDeleteClick, onUpdateClick}: LogViewProps) {
+    const classes = useStyles();
 
-
-    render() {
-        //const classes = useStyles();
-        return (
-            <Paper className='root'>
-                <Table className='table' aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Category ID</TableCell>
-                            <TableCell>Category name</TableCell>
-                            <TableCell>Request ID</TableCell>
-                            <TableCell>Content</TableCell>
-                            <TableCell>Marked up</TableCell>
-                            <TableCell>&nbsp;</TableCell>
-                            <TableCell>&nbsp;</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {((log: Log) => (
-                            <TableRow key={log.id}>
-                                <TableCell>{log.id}</TableCell>
-                                <TableCell component="th" scope="row">
-                                    {log.categoryId}
-                                </TableCell>
-                                <TableCell>{log.categoryName}</TableCell>
-                                <TableCell>{log.requestId}</TableCell>
-                                <TableCell>{log.content}</TableCell>
-                                { /*<input type="checkbox" defaultChecked={row.isMarkedUp}/> */}
-                                <Checkbox defaultChecked={log.isMarkedUp}/>
-                                <TableCell>
-                                    <Button onClick={(e) => {
-                                        stopEvent(e);
-                                        this.props.onUpdateClick();
-                                    }}>Update
-                                    </Button>
-                                </TableCell>
-                                <TableCell>
-                                    <Button onClick={(e) => {
-                                        stopEvent(e);
-                                        this.props.onDeleteClick();
-                                    }}>Delete
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Paper>
-        );
-    }
+    return (
+        <Paper className={classes.root}>
+            <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell>ID</StyledTableCell>
+                        <StyledTableCell>Category ID</StyledTableCell>
+                        <StyledTableCell>Category name</StyledTableCell>
+                        <StyledTableCell>Request ID</StyledTableCell>
+                        <StyledTableCell>Content</StyledTableCell>
+                        <StyledTableCell>Marked up</StyledTableCell>
+                        <StyledTableCell>&nbsp;</StyledTableCell>
+                        <StyledTableCell>&nbsp;</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {((log: Log) => (
+                        <StyledTableRow key={log.id}>
+                            <StyledTableCell>{log.id}</StyledTableCell>
+                            <StyledTableCell component="th" scope="row">
+                                {log.categoryId}
+                            </StyledTableCell>
+                            <StyledTableCell>{log.categoryName}</StyledTableCell>
+                            <StyledTableCell>{log.requestId}</StyledTableCell>
+                            <StyledTableCell>{log.content}</StyledTableCell>
+                            <StyledTableCell><Checkbox defaultChecked={log.isMarkedUp}/></StyledTableCell>
+                            <StyledTableCell>
+                                <Button onClick={(e) => {
+                                    stopEvent(e);
+                                    onUpdateClick();
+                                }}>Update
+                                </Button>
+                            </StyledTableCell>
+                            <StyledTableCell>
+                                <Button onClick={(e) => {
+                                    stopEvent(e);
+                                    onDeleteClick();
+                                }}>Delete
+                                </Button>
+                            </StyledTableCell>
+                        </StyledTableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </Paper>
+    );
 }
 
 //export default withStyles(styles, { withTheme: true })(LogView);

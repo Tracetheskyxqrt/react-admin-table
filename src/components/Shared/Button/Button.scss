@@ -13,6 +13,13 @@
   font-size: 14px;
   transition: all ease 0.2s;
 
+  .new-button {
+    color: #999999;
+    height: 100px;
+    width: 200px;
+    background-color: red;
+  }
+
   &:disabled {
     color: #aaa;
   }

@@ -4,6 +4,7 @@ import { OrderedMap } from 'immutable';
 import {Log} from '../../../models/Log'
 import Spiner from '../../Shared/Spiner/Spiner';
 import DataTable from '../../../components/Shared/DataTable/DataTable';
+import '../../../components/Shared/Button/Button.scss';
 
 interface LogListViewProps extends Props<LogListView> {
     logs: OrderedMap<string, Log>;
@@ -11,11 +12,12 @@ interface LogListViewProps extends Props<LogListView> {
     onCreateClick: () => any;
     onLogClick: (log: Log) => any;
     onUpdateClick: (log: Log) => any;
+    onDeleteClick: (id: string) => any;
 }
 
 export default class LogListView extends Component <LogListViewProps> {
     render () {
-        const {logs, loading, onCreateClick, onUpdateClick, onLogClick} = this.props;
+        const {logs, loading, onCreateClick, onUpdateClick, onDeleteClick, onLogClick} = this.props;
         if (loading) {
             return <Spiner />;
         }
@@ -24,12 +26,13 @@ export default class LogListView extends Component <LogListViewProps> {
             <div className ="log-list">
                 <p className="Table-header"><b>Admin log's table</b></p>
                 <div>
-                    <Button className = "new-button" onClick={() => onCreateClick()}>Create</Button>
+                    <Button className = 'new-button' onClick={() => onCreateClick()}>Create</Button>
                 </div>
                 <DataTable
                     data = {logs.valueSeq().toArray().sort((a, b) => Number(a.id) - Number(b.id))}
                     onRowClick={(log: Log) => onLogClick(log)}
                     onUpdateClick={(log: Log) => onUpdateClick(log)}
+                    onDeleteClick={(logId: Log["id"]) => onDeleteClick(logId)}
                 ></DataTable>
             </div>
         );

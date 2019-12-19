@@ -79,6 +79,7 @@ export class LogListContainer extends React.Component<AllProps> {
                     onCreateClick={this.onCreateClick}
                     onLogClick={this.onTaskClick}
                     onUpdateClick={this.onUpdateClick}
+                    onDeleteClick={this.onDeleteClick}
                 />
             </div>
         );

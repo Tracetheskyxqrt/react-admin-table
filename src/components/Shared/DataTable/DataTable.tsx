@@ -10,8 +10,9 @@ import {Log} from "../../../models/Log";
 import Button from "../Button/Button";
 import {stopEvent} from "../../../lib/stopEvent";
 import Checkbox from "../Checkbox/Checkbox";
+import './DataTable.scss';
 
-/*const StyledTableCell = withStyles((theme: Theme) =>
+const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
         head: {
             backgroundColor: theme.palette.common.black,
@@ -41,50 +42,53 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
-});*/
+});
 
 interface DataTableProps {
     data: any[];
     onRowClick?: (row: any) => any;
     onUpdateClick: (log: Log) => any;
+    onDeleteClick: (id: string) => any;
 }
 
-export default function DataTable({data, onRowClick, onUpdateClick}: DataTableProps) {
-    //const classes = useStyles();
+export default function DataTable({data, onRowClick, onDeleteClick, onUpdateClick}: DataTableProps) {
+    const classes = useStyles();
 
     return (
-        <Paper className='root'>
-            <Table className='table' aria-label="customized table">
+        <Paper className={classes.root}>
+            <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell>Category ID</TableCell>
-                        <TableCell>Category name</TableCell>
-                        <TableCell>Request ID</TableCell>
-                        <TableCell>Content</TableCell>
-                        <TableCell>Marked up</TableCell>
-                        <TableCell>&nbsp;</TableCell>
-                        <TableCell>&nbsp;</TableCell>
+                        <StyledTableCell>ID</StyledTableCell>
+                        <StyledTableCell>Category ID</StyledTableCell>
+                        <StyledTableCell>Category name</StyledTableCell>
+                        <StyledTableCell>Request ID</StyledTableCell>
+                        <StyledTableCell>Content</StyledTableCell>
+                        <StyledTableCell>Marked up</StyledTableCell>
+                        <StyledTableCell>&nbsp;</StyledTableCell>
+                        <StyledTableCell>&nbsp;</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {data.map(row => (
-                        <TableRow key={row.id}>
-                            <TableCell>{row.id}</TableCell>
-                            <TableCell component="th" scope="row">
+                        <StyledTableRow className ='table-row' key={row.id} onClick={() => onRowClick && onRowClick(row)}>
+                            <StyledTableCell>{row.id}</StyledTableCell>
+                            <StyledTableCell component="th" scope="row">
                                 {row.categoryId}
-                            </TableCell>
-                            <TableCell>{row.categoryName}</TableCell>
-                            <TableCell>{row.requestId}</TableCell>
-                            <TableCell>{row.content}</TableCell>
-                            { /*<input type="checkbox" defaultChecked={row.isMarkedUp}/> */}
-                            <TableCell><Checkbox defaultChecked={row.isMarkedUp}/></TableCell>
-                            <TableCell><Button onClick={(e) => {
+                            </StyledTableCell>
+                            <StyledTableCell>{row.categoryName}</StyledTableCell>
+                            <StyledTableCell>{row.requestId}</StyledTableCell>
+                            <StyledTableCell>{row.content}</StyledTableCell>
+                            <StyledTableCell><Checkbox defaultChecked={row.isMarkedUp}/></StyledTableCell>
+                            <StyledTableCell><Button onClick={(e) => {
                                 stopEvent(e);
                                 onUpdateClick(row);
-                            }}>Update</Button></TableCell>
-                            <TableCell><Button>Delete</Button></TableCell>
-                        </TableRow>
+                            }}>Update</Button></StyledTableCell>
+                            <StyledTableCell>< Button onClick={(e) => {
+                                stopEvent(e);
+                                onDeleteClick(row.id);
+                            }}>Delete</Button></StyledTableCell>
+                        </StyledTableRow>
                     ))}
                 </TableBody>
             </Table>

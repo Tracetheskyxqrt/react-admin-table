@@ -29,19 +29,19 @@ export class LogCreateView extends React.Component<LogCreateViewProps> {
             <div className='log-create-view-container'>
                 <Button onClick={onCreate}>Create</Button>
                 <div className='log-form'>
-                    <FormField label='Category ID'>
+                    <FormField label='Category ID:'>
                         <input value={categoryId} onChange={(e) => onCategoryIdChange(e.target.value)}/>
                     </FormField>
-                    <FormField>
+                    <FormField label='Category name:'>
                         <input value={categoryName} onChange={(e) => onCategoryNameChange(e.target.value)}/>
                     </FormField>
-                    <FormField>
+                    <FormField label='Request ID:'>
                         <input value={requestId} onChange={(e) => onRequestIdChange(e.target.value)}/>
                     </FormField>
-                    <FormField>
-                        <input value={content} onChange={(e) => onContentChange(e.target.value)}/>
+                    <FormField label='Content:'>
+                        <textarea value={String(content)} onChange={(e) => onContentChange(e.target.value)}/>
                     </FormField>
-                    <FormField>
+                    <FormField label='Is marked up:'>
                         <input value={String(isMarkedUp)} onChange={(e) => onIsMarkedUpChange(String(e.target.value))}/>
                     </FormField>
                 </div>
