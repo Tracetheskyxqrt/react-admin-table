@@ -8,57 +8,61 @@ import { LogUpdateView } from './LogUpdateView';
 import {
     updateLogAction,
     createNewLogAction,
-    setCategoryIdAction,
-    setCategoryNameAction,
+    //setCategoryIdAction,
+    //setCategoryNameAction,
+    setCategoriesAction,
     setRequestIdAction,
     setContentAction,
     setIsMarkedUpAction
 } from '../../../actions/AdminTable/adminTable';
 
 import { Log } from '../../../models/Log';
+import {Category} from '../../../models/Category';
 
 interface RouteProps extends RouteComponentProps<{}> {
     match: any;
     history: any;
 }
 
-interface LogCreateContainerProps extends Props<LogCreateContainer> {
+interface LogUpdateContainerProps extends Props<LogUpdateContainer> {
     newLog: Log | null;
     log: Log | null;
 }
 
-interface LogCreateContainerDispatch extends Props<LogCreateContainer> {
+interface LogUpdateContainerDispatch extends Props<LogUpdateContainer> {
     updateLog: () => any;
     createNewLog: (log: Log) => any;
-    setCategoryId: (categoryId: string) => any;
-    setCategoryName: (categoryName: string) => any;
+    //setCategoryId: (categoryId: string) => any;
+    //setCategoryName: (categoryName: string) => any;
+    setCategories: (categories: Category[]) => any;
     setRequestId: (requestId: string) => any;
     setContent: (content: string) => any;
-    setIsMarkedUp: (isMarkedUp: string) => any;
+    setIsMarkedUp: (isMarkedUp: boolean) => any;
 }
 
-function mapProps(state: AppState, props: LogCreateContainerProps): LogCreateContainerProps {
+function mapProps(state: AppState, props: LogUpdateContainerProps): LogUpdateContainerProps {
     return {
         newLog: state.adminTableState.newLog,
         log: state.adminTableState.currentLog,
     };
 }
 
-function mapDispatch(dispatch: Dispatch<any>): LogCreateContainerDispatch {
+function mapDispatch(dispatch: Dispatch<any>): LogUpdateContainerDispatch {
     return {
         updateLog: () => dispatch(updateLogAction()),
-        createNewLog: () => dispatch(createNewLogAction()),
-        setCategoryId: (categoryId: string) => dispatch(setCategoryIdAction(categoryId)),
-        setCategoryName: (categoryName: string) => dispatch(setCategoryNameAction(categoryName)),
+        createNewLog: (log: Log) => dispatch(createNewLogAction(log)),
+        //setCategoryId: (categoryId: string) => dispatch(setCategoryIdAction(categoryId)),
+        //setCategoryName: (categoryName: string) => dispatch(setCategoryNameAction(categoryName)),
+        setCategories: (categories: Category[]) => dispatch(setCategoriesAction(categories)),
         setRequestId: (requestId: string) => dispatch(setRequestIdAction(requestId)),
         setContent: (content: string) => dispatch(setContentAction(content)),
         setIsMarkedUp: (isMarkedUp: any) => dispatch(setIsMarkedUpAction(isMarkedUp)), //тут что-то с boolean не так. isMarkedUp - bool
     };
 }
 
-type AllProps = LogCreateContainerProps & LogCreateContainerDispatch & RouteProps;
+type AllProps = LogUpdateContainerProps & LogUpdateContainerDispatch & RouteProps;
 
-export class LogCreateContainer extends React.Component<AllProps> {
+export class LogUpdateContainer extends React.Component<AllProps> {
     componentDidMount() {
         const {createNewLog, log} = this.props;
         if (!log) {
@@ -67,6 +71,7 @@ export class LogCreateContainer extends React.Component<AllProps> {
         createNewLog(log);
     }
 
+    /*
     onCategoryIdChange = (categoryId: string) => {
         const {setCategoryId} = this.props;
         setCategoryId(categoryId);
@@ -75,6 +80,12 @@ export class LogCreateContainer extends React.Component<AllProps> {
     onCategoryNameChange = (categoryName: string) => {
         const {setCategoryName} = this.props;
         setCategoryName(categoryName);
+    }
+    */
+
+    onCategoriesChange = (categories: Category[]) => {
+        const {setCategories} = this.props;
+        setCategories(categories)
     }
 
     onRequestIdChange = (requestId: string) => {
@@ -87,7 +98,7 @@ export class LogCreateContainer extends React.Component<AllProps> {
         setContent(content);
     }
 
-    onIsMarkedUpChange = (isMarkedUp: string) => {
+    onIsMarkedUpChange = (isMarkedUp: boolean) => {
         const {setIsMarkedUp} = this.props;
         setIsMarkedUp(isMarkedUp);
     }
@@ -108,13 +119,15 @@ export class LogCreateContainer extends React.Component<AllProps> {
         return (
             <div className='container'>
                 <LogUpdateView
-                    categoryId={newLog.categoryId}
-                    categoryName={newLog.categoryName}
-                    requestId={newLog.requestId}
+                    //categoryId={newLog.categories[0].id}
+                    //categoryName={newLog.categories[0].name}
+                    categories={newLog.categories}
+                    requestId={newLog.id}
                     content={newLog.content}
                     isMarkedUp={newLog.isMarkedUp}
-                    onCategoryIdChange={this.onCategoryIdChange}
-                    onCategoryNameChange={this.onCategoryNameChange}
+                    //onCategoryIdChange={this.onCategoryIdChange}
+                    //onCategoryNameChange={this.onCategoryNameChange}
+                    onCategoriesChange={this.onCategoriesChange}
                     onRequestIdChange={this.onRequestIdChange}
                     onContentChange={this.onContentChange}
                     onIsMarkedUpChange={this.onIsMarkedUpChange}
@@ -125,4 +138,4 @@ export class LogCreateContainer extends React.Component<AllProps> {
     }
 }
 
-export default withRouter(connect(mapProps, mapDispatch)(LogCreateContainer));
+export default withRouter(connect(mapProps, mapDispatch)(LogUpdateContainer));

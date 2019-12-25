@@ -1,5 +1,5 @@
 import React, {Component, Props} from 'react';
-import Button from "../../Shared/Button/Button";
+import Button from '../../Shared/Button/Button';
 import { OrderedMap } from 'immutable';
 import {Log} from '../../../models/Log'
 import Spiner from '../../Shared/Spiner/Spiner';
@@ -10,14 +10,13 @@ interface LogListViewProps extends Props<LogListView> {
     logs: OrderedMap<string, Log>;
     loading: boolean;
     onCreateClick: () => any;
-    onLogClick: (log: Log) => any;
     onUpdateClick: (log: Log) => any;
     onDeleteClick: (id: string) => any;
 }
 
 export default class LogListView extends Component <LogListViewProps> {
     render () {
-        const {logs, loading, onCreateClick, onUpdateClick, onDeleteClick, onLogClick} = this.props;
+        const {logs, loading, onCreateClick, onUpdateClick, onDeleteClick} = this.props;
         if (loading) {
             return <Spiner />;
         }
@@ -30,8 +29,7 @@ export default class LogListView extends Component <LogListViewProps> {
                 </div>
                 <DataTable
                     data = {logs.valueSeq().toArray().sort((a, b) => Number(a.id) - Number(b.id))}
-                    onRowClick={(log: Log) => onLogClick(log)}
-                    onUpdateClick={(log: Log) => onUpdateClick(log)}
+                    onRowClick={(log: Log) => onUpdateClick(log)}
                     onDeleteClick={(logId: Log["id"]) => onDeleteClick(logId)}
                 ></DataTable>
             </div>

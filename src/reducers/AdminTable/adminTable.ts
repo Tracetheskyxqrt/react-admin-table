@@ -1,6 +1,7 @@
 import { Action } from 'redux';
 import { OrderedMap } from 'immutable';
 import * as uuid from 'uuid';
+import { Category } from '../../models/Category';
 
 import {
     CREATE_LOG,
@@ -9,8 +10,9 @@ import {
     SET_CURRENT_LOG,
     CREATE_NEW_LOG,
 
-    SET_CATEGORY_ID_LOG,
-    SET_CATEGORY_NAME_LOG,
+    //SET_CATEGORY_ID_LOG,
+    //SET_CATEGORY_NAME_LOG,
+    SET_CATEGORIES,
     SET_REQUEST_ID_LOG,
     SET_CONTENT_LOG,
     SET_IS_MARKED_UP_LOG,
@@ -22,17 +24,27 @@ import {
 
 import { Log } from '../../models/Log';
 
-function createData(id: string, categoryId: string, categoryName: string,
-                    requestId: string, content: string, isMarkedUp: boolean) {
-    return { id, categoryId, categoryName, requestId, content, isMarkedUp };
+function createLog(id: string, categories: Category[], content: string, isMarkedUp: boolean ) {
+    return {id, content, isMarkedUp, categories };
 }
 
 const arrLogs = [
-    createData('1', '213', 'category1', '1', 'content1', true),
-    createData('2', '123', 'category2', '2', 'content2',true),
-    createData('3', '124', 'category3', '3', 'content3',true),
-    createData('4', '345', 'category4', '4', 'content4',true),
-    createData('5', '676', 'category5', '5', 'content1',false),
+    createLog('0', [{id: '0', name: '1883 год'}, {id: '1', name: 'category1'},
+        {id: '1', name: 'Фридрих Ницше'}, {id: '1', name: 'category1'}, {id: '1', name: 'category1'},
+        {id: '1', name: 'category1'}, {id: '1', name: 'category1'}, {id: '1', name: 'category1'},
+        {id: '1', name: '«ТАК ГОВОРИЛ ЗАРАТУСТРА»'}, {id: '1', name: 'category1'}, {id: '1', name: 'category1'},
+        {id: '1', name: 'category1'}, {id: '1', name: 'цитаты из книги'}, {id: '1', name: 'category1'}],
+        'Честь и стыд перед сном! Это первое! И избегайте встречи с теми, кто плохо спит и бодрствует ночью!\n' +
+        'Стыдлив и вор в присутствии сна: потихоньку крадется он в ночи. Но нет стыда у ночного сторожа: не стыдясь, трубит он в свой рог.\n' +
+        'Уметь спать — не пустяшное дело: чтобы хорошо спать, надо бодрствовать в течение целого дня.\n' +
+        'Десять раз должен ты днём преодолеть самого себя: это даст хорошую усталость, это мак души.\n' +
+        'Десять раз должен ты мириться с самим собою: ибо преодоление есть обида, и дурно спит непомирившийся.\n' +
+        'Десять истин должен найти ты в течение дня: иначе ты будешь и ночью искать истины и твоя душа останется голодной.\n' +
+        'Десять раз должен ты смеяться в течение дня и быть весёлым: иначе будет тебя ночью беспокоить желудок, этот отец скорби.', true),
+    createLog('1', [{id: '0', name: 'category1'}], 'content1', true),
+    createLog('2', [{id: '0', name: 'category2'}], 'content2', true),
+    createLog('3', [{id: '0', name: 'category3'}], 'content3', true),
+    createLog('4', [{id: '0', name: 'category4'}], 'content4', false),
 ];
 
 export interface AdminTableState {
@@ -63,7 +75,7 @@ export function adminTableState(state: AdminTableState = initialState, action: A
             const log = (action as any).log;
             return {
                 ...state,
-                tasks: state.logs.set(log.id, log),
+                logs: state.logs.set(log.id, log),
                 currentLog: log,
                 newLog: null,
             };
@@ -87,8 +99,9 @@ export function adminTableState(state: AdminTableState = initialState, action: A
         case CREATE_NEW_LOG: {
             const log = (action as any).log || {
                 id: uuid.v1(), //Должно быть: 'id: uuid(),'
-                categoryId: '',
-                categoryName: '',
+                //categoryId: '',
+                //categoryName: '',
+                categories: null, //********
                 requestId: '',
                 content: '',
                 isMarkedUp: false,
@@ -98,11 +111,12 @@ export function adminTableState(state: AdminTableState = initialState, action: A
                 newLog: log,
             };
         }
+        /*
         case SET_CATEGORY_ID_LOG: {
             const categoryId = (action as any).categoryId;
             return {
                 ...state,
-                newTask: {
+                newLog: {
                     ...state.newLog,
                     categoryId,
                 },
@@ -112,17 +126,29 @@ export function adminTableState(state: AdminTableState = initialState, action: A
             const categoryName = (action as any).categoryName;
             return {
                 ...state,
-                newTask: {
+                newLog: {
                     ...state.newLog,
                     categoryName,
                 },
             };
+        }*/
+
+        case SET_CATEGORIES: {
+            const categories = (action as any).categories
+            return {
+                ...state,
+                newLog: {
+                    ...state.newLog,
+                    categories
+                },
+            };
         }
+
         case SET_REQUEST_ID_LOG: {
             const requestId = (action as any).requestId;
             return {
                 ...state,
-                newTask: {
+                newLog: {
                     ...state.newLog,
                     requestId,
                 },
@@ -132,7 +158,7 @@ export function adminTableState(state: AdminTableState = initialState, action: A
             const content = (action as any).content;
             return {
                 ...state,
-                newTask: {
+                newLog: {
                     ...state.newLog,
                     content,
                 },
@@ -142,7 +168,7 @@ export function adminTableState(state: AdminTableState = initialState, action: A
             const isMarkedUp = (action as any).isMarkedUp;
             return {
                 ...state,
-                newTask: {
+                newLog: {
                     ...state.newLog,
                     isMarkedUp,
                 },

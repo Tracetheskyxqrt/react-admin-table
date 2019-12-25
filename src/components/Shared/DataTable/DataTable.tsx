@@ -6,10 +6,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {Log} from "../../../models/Log";
-import Button from "../Button/Button";
-import {stopEvent} from "../../../lib/stopEvent";
-import Checkbox from "../Checkbox/Checkbox";
+import Button from '../Button/Button';
+import {stopEvent} from '../../../lib/stopEvent';
+import Checkbox from '../Checkbox/Checkbox';
+import { Category } from '../../../models/Category';
 
 const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -46,11 +46,10 @@ const useStyles = makeStyles({
 interface DataTableProps {
     data: any[];
     onRowClick?: (row: any) => any;
-    onUpdateClick: (log: Log) => any;
     onDeleteClick: (id: string) => any;
 }
 
-export default function DataTable({data, onRowClick, onDeleteClick, onUpdateClick}: DataTableProps) {
+export default function DataTable({data, onRowClick, onDeleteClick}: DataTableProps) {
     const classes = useStyles();
 
     return (
@@ -61,10 +60,8 @@ export default function DataTable({data, onRowClick, onDeleteClick, onUpdateClic
                         <StyledTableCell>ID</StyledTableCell>
                         <StyledTableCell>Category ID</StyledTableCell>
                         <StyledTableCell>Category name</StyledTableCell>
-                        <StyledTableCell>Request ID</StyledTableCell>
                         <StyledTableCell>Content</StyledTableCell>
                         <StyledTableCell>Marked up</StyledTableCell>
-                        <StyledTableCell>&nbsp;</StyledTableCell>
                         <StyledTableCell>&nbsp;</StyledTableCell>
                     </TableRow>
                 </TableHead>
@@ -73,16 +70,13 @@ export default function DataTable({data, onRowClick, onDeleteClick, onUpdateClic
                         <StyledTableRow className ='table-row' key={row.id} onClick={() => onRowClick && onRowClick(row)}>
                             <StyledTableCell>{row.id}</StyledTableCell>
                             <StyledTableCell component="th" scope="row">
-                                {row.categoryId}
+                                {row.categories.map((category: Category) => category.id).join('; ')}
                             </StyledTableCell>
-                            <StyledTableCell>{row.categoryName}</StyledTableCell>
-                            <StyledTableCell>{row.requestId}</StyledTableCell>
+                            <StyledTableCell>
+                                {row.categories.map((category: Category) => category.name).join('; ')}
+                            </StyledTableCell>
                             <StyledTableCell>{row.content}</StyledTableCell>
                             <StyledTableCell><Checkbox defaultChecked={row.isMarkedUp}/></StyledTableCell>
-                            <StyledTableCell><Button onClick={(e) => {
-                                stopEvent(e);
-                                onUpdateClick(row);
-                            }}>Update</Button></StyledTableCell>
                             <StyledTableCell>< Button onClick={(e) => {
                                 stopEvent(e);
                                 onDeleteClick(row.id);

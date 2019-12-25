@@ -6,16 +6,19 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { AppState } from '../../../reducers';
 import { LogCreateView } from './LogCreateView';
 import { Log } from '../../../models/Log';
+import {Category} from '../../../models/Category';
 
 import {
     createLogAction,
     createNewLogAction,
-    setCategoryIdAction,
-    setCategoryNameAction,
+    //setCategoryIdAction,
+    //setCategoryNameAction,
+    setCategoriesAction,
     setRequestIdAction,
     setContentAction,
     setIsMarkedUpAction
 } from '../../../actions/AdminTable/adminTable';
+
 
 interface RouteProps extends RouteComponentProps<{}> {
     match: any;
@@ -29,11 +32,12 @@ interface LogCreateContainerProps extends Props<LogCreateContainer> {
 interface LogCreateContainerDispatch extends Props<LogCreateContainer> {
     createLog: () => any;
     createNewLog: () => any;
-    setCategoryId: (categoryId: string) => any;
-    setCategoryName: (categoryName: string) => any;
+    //setCategoryId: (categoryId: string) => any;
+    //setCategoryName: (categoryName: string) => any;
+    setCategories: (categories: Category[]) => any;
     setRequestId: (requestId: string) => any;
     setContent: (content: string) => any;
-    setIsMarkedUp: (isMarkedUp: string) => any;
+    setIsMarkedUp: (isMarkedUp: boolean) => any;
 }
 
 function mapProps(state: AppState, props: LogCreateContainerProps): LogCreateContainerProps {
@@ -46,8 +50,9 @@ function mapDispatch(dispatch: Dispatch<any>): LogCreateContainerDispatch {
     return {
         createLog: () => dispatch(createLogAction()),
         createNewLog: () => dispatch(createNewLogAction()),
-        setCategoryId: (categoryId: string) => dispatch(setCategoryIdAction(categoryId)),
-        setCategoryName: (categoryName: string) => dispatch(setCategoryNameAction(categoryName)),
+        //setCategoryId: (categoryId: string) => dispatch(setCategoryIdAction(categoryId)),
+        //setCategoryName: (categoryName: string) => dispatch(setCategoryNameAction(categoryName)),
+        setCategories: (categories: Category[]) => dispatch(setCategoriesAction(categories)),
         setRequestId: (requestId: string) => dispatch(setRequestIdAction(requestId)),
         setContent: (content: string) => dispatch(setContentAction(content)),
         setIsMarkedUp: (isMarkedUp: any) => dispatch(setIsMarkedUpAction(isMarkedUp)), //тут что-то с boolean не так. isMarkedUp - bool
@@ -62,6 +67,7 @@ export class LogCreateContainer extends React.Component<AllProps> {
         createNewLog();
     }
 
+    /*
     onCategoryIdChange = (categoryId: string) => {
         const {setCategoryId} = this.props;
         setCategoryId(categoryId);
@@ -70,6 +76,12 @@ export class LogCreateContainer extends React.Component<AllProps> {
     onCategoryNameChange = (categoryName: string) => {
         const {setCategoryName} = this.props;
         setCategoryName(categoryName);
+    }
+    */
+
+    onCategoriesChange = (categories: Category[]) => {
+        const {setCategories} = this.props;
+        setCategories(categories);
     }
 
     onRequestIdChange = (requestId: string) => {
@@ -82,7 +94,7 @@ export class LogCreateContainer extends React.Component<AllProps> {
         setContent(content);
     }
 
-    onIsMarkedUpChange = (isMarkedUp: string) => {
+    onIsMarkedUpChange = (isMarkedUp: boolean) => {
         const {setIsMarkedUp} = this.props;
         setIsMarkedUp(isMarkedUp);
     }
@@ -103,13 +115,15 @@ export class LogCreateContainer extends React.Component<AllProps> {
         return (
             <div className='container'>
                 <LogCreateView
-                    categoryId={newLog.categoryId}
-                    categoryName={newLog.categoryName}
-                    requestId={newLog.requestId}
+                    //categoryId={newLog.categories[0].id}
+                    //categoryName={newLog.categories[0].name}
+                    categories={newLog.categories}
+                    requestId={newLog.id}
                     content={newLog.content}
                     isMarkedUp={newLog.isMarkedUp}
-                    onCategoryIdChange={this.onCategoryIdChange}
-                    onCategoryNameChange={this.onCategoryNameChange}
+                    //onCategoryIdChange={this.onCategoryIdChange}
+                    //onCategoryNameChange={this.onCategoryNameChange}
+                    onCategoriesChange={this.onCategoriesChange}
                     onRequestIdChange={this.onRequestIdChange}
                     onContentChange={this.onContentChange}
                     onIsMarkedUpChange={this.onIsMarkedUpChange}

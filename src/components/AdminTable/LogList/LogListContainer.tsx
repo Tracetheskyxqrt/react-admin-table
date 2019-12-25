@@ -46,12 +46,6 @@ export class LogListContainer extends React.Component<AllProps> {
         setCurrentLog(null);
     }
 
-    onTaskClick = (log: Log) => {
-        const {history, setCurrentLog} = this.props;
-        setCurrentLog(log);
-        history.push(`/${log.id}`);
-    }
-
     onUpdateClick = (log: Log) => {
         const {history, setCurrentLog} = this.props;
         setCurrentLog(log);
@@ -77,7 +71,6 @@ export class LogListContainer extends React.Component<AllProps> {
                     logs={logs}
                     loading={loading}
                     onCreateClick={this.onCreateClick}
-                    onLogClick={this.onTaskClick}
                     onUpdateClick={this.onUpdateClick}
                     onDeleteClick={this.onDeleteClick}
                 />
