@@ -22,3 +22,5 @@ export async function request<T>(endpoint: string, params: {
         }
     }
 }
+
+//http://intent-classification-app.herokuapp.com/api/admin/requests/?format=json - getRequests()

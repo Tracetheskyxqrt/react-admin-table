@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { Log } from '../../models/Log';
 import { AppState } from '../../reducers';
 import { request } from '../../lib/request';
-import {Category} from '../../models/Category';
+import { Category } from '../../models/Category';
 
 export const CREATE_LOG = 'CREATE_LOG';
 export const UPDATE_LOG = 'UPDATE_LOG';

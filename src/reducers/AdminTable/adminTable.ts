@@ -10,8 +10,6 @@ import {
     SET_CURRENT_LOG,
     CREATE_NEW_LOG,
 
-    //SET_CATEGORY_ID_LOG,
-    //SET_CATEGORY_NAME_LOG,
     SET_CATEGORIES,
     SET_REQUEST_ID_LOG,
     SET_CONTENT_LOG,
@@ -23,29 +21,122 @@ import {
 } from '../../actions/AdminTable/adminTable';
 
 import { Log } from '../../models/Log';
+import {ServerResponse} from '../../models/ServerResponse';
+import {request} from '../../lib/request';
+import {Promise} from 'q';
 
-function createLog(id: string, categories: Category[], content: string, isMarkedUp: boolean ) {
-    return {id, content, isMarkedUp, categories };
-}
+const arrLogs: Log[] = [{
+        id: '1',
+        categories: [
+            {
+                id: '4',
+                name: 'Заказать еду',
+            },
+            {
+                id: '5',
+                name: 'Еда',
+            },
+            {
+                id: '6',
+                name: 'Заказ',
+            },
+            {
+                id: '7',
+                name: 'Суши',
+            },
+            {
+                id: '8',
+                name: 'Доставка',
+            },
+            {
+                id: '9',
+                name: 'Лень',
+            },
+            {
+                id: '10',
+                name: 'Быстро',
+            },
+            {
+                id: '11',
+                name: 'Услуги',
+            }
+        ],
+        content: 'закажи суши',
+        is_marked_up: true,
+    },
+    {
+        id: '2',
+        categories: [
+            {
+                id: '1',
+                name: "Курс валют"
+            }
+        ],
+        content: "Сколько стоит евро?",
+        is_marked_up: true
+    },
+    {
+        id: '3',
+        categories: [
+            {
+                id: '1',
+                name: "Курс валют"
+            }
+        ],
+        content: "Сколько стоит доллар?",
+        is_marked_up: true
+    },
+    {
+        id: '4',
+        categories: [
+            {
+                id: '1',
+                name: "Курс валют"
+            }
+        ],
+        content: "курс доллара на завтра?",
+        is_marked_up: true
+    },
+    {
+        id: '5',
+        categories: [
+            {
+                id: '1',
+                name: "Курс валют"
+            }
+        ],
+        content: "курс евро на завтра?",
+        is_marked_up: true
+    },
+    {
+        id: '6',
+        categories: [
+            {
+                id: '1',
+                name: "Курс валют"
+            }
+        ],
+        content: "сколько будет стоить евро завтра?",
+        is_marked_up: true
+    },
+    {
+        id: '7',
+        categories: [
+            {
+                id: '1',
+                name: "Курс валют"
+            }
+        ],
+        content: "сколько будет стоить рубль?",
+        is_marked_up: true
+    }
+]
 
-const arrLogs = [
-    createLog('0', [{id: '0', name: '1883 год'}, {id: '1', name: 'category1'},
-        {id: '1', name: 'Фридрих Ницше'}, {id: '1', name: 'category1'}, {id: '1', name: 'category1'},
-        {id: '1', name: 'category1'}, {id: '1', name: 'category1'}, {id: '1', name: 'category1'},
-        {id: '1', name: '«ТАК ГОВОРИЛ ЗАРАТУСТРА»'}, {id: '1', name: 'category1'}, {id: '1', name: 'category1'},
-        {id: '1', name: 'category1'}, {id: '1', name: 'цитаты из книги'}, {id: '1', name: 'category1'}],
-        'Честь и стыд перед сном! Это первое! И избегайте встречи с теми, кто плохо спит и бодрствует ночью!\n' +
-        'Стыдлив и вор в присутствии сна: потихоньку крадется он в ночи. Но нет стыда у ночного сторожа: не стыдясь, трубит он в свой рог.\n' +
-        'Уметь спать — не пустяшное дело: чтобы хорошо спать, надо бодрствовать в течение целого дня.\n' +
-        'Десять раз должен ты днём преодолеть самого себя: это даст хорошую усталость, это мак души.\n' +
-        'Десять раз должен ты мириться с самим собою: ибо преодоление есть обида, и дурно спит непомирившийся.\n' +
-        'Десять истин должен найти ты в течение дня: иначе ты будешь и ночью искать истины и твоя душа останется голодной.\n' +
-        'Десять раз должен ты смеяться в течение дня и быть весёлым: иначе будет тебя ночью беспокоить желудок, этот отец скорби.', true),
-    createLog('1', [{id: '0', name: 'category1'}], 'content1', true),
-    createLog('2', [{id: '0', name: 'category2'}], 'content2', true),
-    createLog('3', [{id: '0', name: 'category3'}], 'content3', true),
-    createLog('4', [{id: '0', name: 'category4'}], 'content4', false),
-];
+//let data = request<ServerResponse>('http://intent-classification-app.herokuapp.com/api/admin/requests/?format=json',
+    //{method: 'GET', body: undefined, headers: undefined});
+//var response =await fetch('http://intent-classification-app.herokuapp.com/api/admin/requests/?format=json');
+//const data: ServerResponse = JSON.parse(String(response));
+//alert(data.result[0].categories[0].name);
 
 export interface AdminTableState {
     logs: OrderedMap<string, Log>;
@@ -98,9 +189,7 @@ export function adminTableState(state: AdminTableState = initialState, action: A
         }
         case CREATE_NEW_LOG: {
             const log = (action as any).log || {
-                id: uuid.v1(), //Должно быть: 'id: uuid(),'
-                //categoryId: '',
-                //categoryName: '',
+                id: uuid.v1(),
                 categories: null, //********
                 requestId: '',
                 content: '',
@@ -111,28 +200,6 @@ export function adminTableState(state: AdminTableState = initialState, action: A
                 newLog: log,
             };
         }
-        /*
-        case SET_CATEGORY_ID_LOG: {
-            const categoryId = (action as any).categoryId;
-            return {
-                ...state,
-                newLog: {
-                    ...state.newLog,
-                    categoryId,
-                },
-            };
-        }
-        case SET_CATEGORY_NAME_LOG: {
-            const categoryName = (action as any).categoryName;
-            return {
-                ...state,
-                newLog: {
-                    ...state.newLog,
-                    categoryName,
-                },
-            };
-        }*/
-
         case SET_CATEGORIES: {
             const categories = (action as any).categories
             return {
@@ -143,7 +210,6 @@ export function adminTableState(state: AdminTableState = initialState, action: A
                 },
             };
         }
-
         case SET_REQUEST_ID_LOG: {
             const requestId = (action as any).requestId;
             return {
@@ -165,12 +231,12 @@ export function adminTableState(state: AdminTableState = initialState, action: A
             };
         }
         case SET_IS_MARKED_UP_LOG: {
-            const isMarkedUp = (action as any).isMarkedUp;
+            const isMarkedUp = (action as any).is_marked_up;
             return {
                 ...state,
                 newLog: {
                     ...state.newLog,
-                    isMarkedUp,
+                    is_marked_up: isMarkedUp,
                 },
             };
         }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Component, Props } from 'react';
-
 import './FormField.scss';
 
 interface FormFieldProps extends Props<FormField> {

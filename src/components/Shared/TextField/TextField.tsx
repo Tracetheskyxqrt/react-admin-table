@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-/*const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             '& > *': {
@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
             },
         },
     }),
-);*/
+);
 
 interface TextFieldProps {
     id?: string;
@@ -20,11 +20,8 @@ interface TextFieldProps {
 }
 
 export default function BasicTextFields({id, label, value}: TextFieldProps) {
-    //const classes = useStyles();
+    const classes = useStyles();
     const [myValue, setValue] = useState('');
-
-
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
     };

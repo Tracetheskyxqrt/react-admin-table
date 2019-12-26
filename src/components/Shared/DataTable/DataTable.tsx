@@ -76,7 +76,7 @@ export default function DataTable({data, onRowClick, onDeleteClick}: DataTablePr
                                 {row.categories.map((category: Category) => category.name).join('; ')}
                             </StyledTableCell>
                             <StyledTableCell>{row.content}</StyledTableCell>
-                            <StyledTableCell><Checkbox defaultChecked={row.isMarkedUp}/></StyledTableCell>
+                            <StyledTableCell><Checkbox defaultChecked={row.is_marked_up}/></StyledTableCell>
                             <StyledTableCell>< Button onClick={(e) => {
                                 stopEvent(e);
                                 onDeleteClick(row.id);

@@ -4,10 +4,7 @@ interface CheckboxProps extends Props<Checkbox> {
     defaultChecked: boolean;
 }
 
-
 export default class Checkbox extends React.Component<CheckboxProps> {
-    //private handleChangeCheckBox: any;
-
     render() {
         const {defaultChecked} = this.props;
         return (

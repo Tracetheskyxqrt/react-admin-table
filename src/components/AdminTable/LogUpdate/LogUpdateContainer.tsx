@@ -8,8 +8,6 @@ import { LogUpdateView } from './LogUpdateView';
 import {
     updateLogAction,
     createNewLogAction,
-    //setCategoryIdAction,
-    //setCategoryNameAction,
     setCategoriesAction,
     setRequestIdAction,
     setContentAction,
@@ -32,8 +30,6 @@ interface LogUpdateContainerProps extends Props<LogUpdateContainer> {
 interface LogUpdateContainerDispatch extends Props<LogUpdateContainer> {
     updateLog: () => any;
     createNewLog: (log: Log) => any;
-    //setCategoryId: (categoryId: string) => any;
-    //setCategoryName: (categoryName: string) => any;
     setCategories: (categories: Category[]) => any;
     setRequestId: (requestId: string) => any;
     setContent: (content: string) => any;
@@ -51,12 +47,10 @@ function mapDispatch(dispatch: Dispatch<any>): LogUpdateContainerDispatch {
     return {
         updateLog: () => dispatch(updateLogAction()),
         createNewLog: (log: Log) => dispatch(createNewLogAction(log)),
-        //setCategoryId: (categoryId: string) => dispatch(setCategoryIdAction(categoryId)),
-        //setCategoryName: (categoryName: string) => dispatch(setCategoryNameAction(categoryName)),
         setCategories: (categories: Category[]) => dispatch(setCategoriesAction(categories)),
         setRequestId: (requestId: string) => dispatch(setRequestIdAction(requestId)),
         setContent: (content: string) => dispatch(setContentAction(content)),
-        setIsMarkedUp: (isMarkedUp: any) => dispatch(setIsMarkedUpAction(isMarkedUp)), //тут что-то с boolean не так. isMarkedUp - bool
+        setIsMarkedUp: (isMarkedUp: any) => dispatch(setIsMarkedUpAction(isMarkedUp)), //тут что-то с boolean не так. is_marked_up - bool
     };
 }
 
@@ -70,18 +64,6 @@ export class LogUpdateContainer extends React.Component<AllProps> {
         }
         createNewLog(log);
     }
-
-    /*
-    onCategoryIdChange = (categoryId: string) => {
-        const {setCategoryId} = this.props;
-        setCategoryId(categoryId);
-    }
-
-    onCategoryNameChange = (categoryName: string) => {
-        const {setCategoryName} = this.props;
-        setCategoryName(categoryName);
-    }
-    */
 
     onCategoriesChange = (categories: Category[]) => {
         const {setCategories} = this.props;
@@ -119,14 +101,10 @@ export class LogUpdateContainer extends React.Component<AllProps> {
         return (
             <div className='container'>
                 <LogUpdateView
-                    //categoryId={newLog.categories[0].id}
-                    //categoryName={newLog.categories[0].name}
                     categories={newLog.categories}
                     requestId={newLog.id}
                     content={newLog.content}
-                    isMarkedUp={newLog.isMarkedUp}
-                    //onCategoryIdChange={this.onCategoryIdChange}
-                    //onCategoryNameChange={this.onCategoryNameChange}
+                    is_marked_up={newLog.is_marked_up}
                     onCategoriesChange={this.onCategoriesChange}
                     onRequestIdChange={this.onRequestIdChange}
                     onContentChange={this.onContentChange}
