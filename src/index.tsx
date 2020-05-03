@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { Provider } from 'react-redux';
 import 'moment/locale/ru';
 import { configStore } from './reducers/configStore';
-import './styles/index.scss';
+//import './styles/index.scss';
 import App from './components/App/App';
 
 
