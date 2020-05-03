@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import LogList from '../AdminTable/LogList/LogListContainer';
 import LogCreate from '../AdminTable/LogCreate/LogCreateContainer';
 import LogUpdate from '../AdminTable/LogUpdate/LogUpdateContainer';
-//import NotFound from '../NotFound/NotFound';
+import NotFound from '../NotFound/NotFound';
 import './App.scss';
 
 export default class App extends Component {
