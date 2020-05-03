@@ -1,6 +1,10 @@
 .button {
   height: 32px;
+<<<<<<< HEAD
   width: 100px;
+=======
+  width: 80px;
+>>>>>>> d3b27784f678fac9aeee558d2f3756a51b6aed60
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -13,6 +17,16 @@
   font-size: 14px;
   transition: all ease 0.2s;
 
+<<<<<<< HEAD
+=======
+  .new-button {
+    color: #999999;
+    height: 100px;
+    width: 200px;
+    background-color: red;
+  }
+
+>>>>>>> d3b27784f678fac9aeee558d2f3756a51b6aed60
   &:disabled {
     color: #aaa;
   }
